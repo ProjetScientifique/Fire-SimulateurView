@@ -8,151 +8,68 @@
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-        <style>
-            /*A METTRE DANS UN FICHIEE*/
-            *{
-                margin: 0;
-                padding: 0;
-            }
-            .update{
-                background-color: rgba(0, 0, 250, .3);;
-            }
-            #main{
-                display: grid;
-                grid-template-columns: 30% 70%;
-                height: 100vh;
-                grid-template-rows: 1fr;
-            }
-
-            #tableau-arrive, #map {
-                width: 100%;
-                height: 100%;
-            }
-
-            h1{
-                padding: 0;
-                font-size: 25px;
-                font-family: 'Courier New', Courier, monospace;
-                width: 100%;
-                height: 5%;
-                text-align: center;
-                background-color: lightgray;
-            }
-            
-            #mapbox, table{ 
-                width: 100%;
-                height: 95%;
-
-            }
-            .intensité{
-                text-align: center;
-            }
-            
-        </style>
+        <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body>
         
         <div id="main">
             <div id="tableau-arrive">
-                <h1>Liste des Evenements :</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Rue</th>
-                            <th>Intensité</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- généré par php. -->
-                        <tr class="update">
-                            <td>V - Rue de la filature</td>
-                            <td class="intensite">2/10<!--ou une image ? jsp--></td>
-                        </tr>
-                        <tr>
-                            <td>V - CPE</td>
-                            <td class="intensite">9/10<!--ou une image ? jsp--></td>
-                        </tr>
-                        <tr>
-                            <td>L - Lyon Part Dieu</td>
-                            <td class="intensite">4/10<!--ou une image ? jsp--></td>
-                        </tr>
-                        <tr>
-                            <td>L - Cr Gambetta</td>
-                            <td class="intensite">5/10<!--ou une image ? jsp--></td>
-                        </tr>
-                        <tr>
-                            <td>L - Place des Terreaux</td>
-                            <td class="intensite">8/10<!--ou une image ? jsp--></td>
-                        </tr>
-                        <tr>
-                            <td>V - Rue de la filature</td>
-                            <td class="intensite">6/10<!--ou une image ? jsp--></td>
-                        </tr>
+                <div class="titre"><h1>Liste des Evenements</h1></div>
+                <div id ="tableau" >
 
-                    </tbody>
-                </table>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rue</th>
+                                <th>Intensité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- généré par php. -->
+                            <tr class="update">
+                                <td>V - Rue de la filature</td>
+                                <td class="intensite">2/10<!--ou une image ? jsp--></td>
+                            </tr>
+                            <tr>
+                                <td>V - CPE</td>
+                                <td class="intensite">9/10<!--ou une image ? jsp--></td>
+                            </tr>
+                            <tr>
+                                <td>L - Lyon Part Dieu</td>
+                                <td class="intensite">4/10<!--ou une image ? jsp--></td>
+                            </tr>
+                            <tr>
+                                <td>L - Cr Gambetta</td>
+                                <td class="intensite">5/10<!--ou une image ? jsp--></td>
+                            </tr>
+                            <tr>
+                                <td>L - Place des Terreaux</td>
+                                <td class="intensite">8/10<!--ou une image ? jsp--></td>
+                            </tr>
+                            <tr>
+                                <td>V - Rue de la filature</td>
+                                <td class="intensite">6/10<!--ou une image ? jsp--></td>
+                            </tr>
+                            <tr class="update">
+                                <td>V - Rue de la filature</td>
+                                <td class="intensite">2/10<!--ou une image ? jsp--></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div id="map">
-                <h1>Carte des incidents :</h1>
+                <div class="titre"><h1>Carte des incidents</h1></div>
                 <div id="mapbox"></div>
             </div>
             
         </div>
         
 
-        <script>
-            /*A METTRE DANs UN FICHIER*/
-            //45.754154744767455, 4.864503340336376
-            const mapbox_token = "pk.eyJ1IjoidGVsbGVibWEiLCJhIjoiY2tuaXdleTY3MHM2dzJucGdpbGxsOXA3aCJ9.Lv06-rCdI3y9m0nC_0bWsg";
-            var map = L.map('mapbox').setView([45.75415, 4.8645033], 12.5);
-            
-            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                attribution: '',
-                maxZoom: 18,
-                id: 'mapbox/streets-v11',
-                tileSize: 512,
-                zoomOffset: -1,
-                accessToken: mapbox_token
-            }).addTo(map);
-        
-            //Si possible voir pour mettre en gris les villes non prise en charge
-            //https://github.com/mmaciejkowalski/L.Highlight
-
-            /*DEFINE IMAGES*/
-            var iconNiveau1 = L.icon({
-                iconUrl: 'img/feu-Niv-5.png',
-                iconSize:     [35,60],//[35, 60], // size of the icon
-                iconAnchor:   [22, 59], // point of the icon which will correspond to marker's location
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-            
-
-
-
-
-
-            /*ADD A MARKER*/
-            var latitude =  45.7596
-            var longitude = 4.8523
-            var adresse = "Lyon Part Dieu"
-            var zoom = 15
-            var niveau = 4
-            var marker = L.marker([latitude, longitude],{icon:iconNiveau1}).addTo(map);
-            marker.bindPopup(`Incendie de Niveau ${niveau} </br><a href="https://www.google.fr/maps/@${latitude},${longitude},${zoom}z">Coordonnées : ${latitude}, ${longitude}</a></br>${adresse}`)
-
-
-            var latitude =  45.77792
-            var longitude = 4.88204646
-            var adresse = "Villeurbanne"
-            var zoom = 15
-            var niveau = 2
-            var marker = L.marker([latitude, longitude],{icon:iconNiveau1}).addTo(map);
-            marker.bindPopup(`Incendie de Niveau ${niveau} </br><a href="https://www.google.fr/maps/@${latitude},${longitude},${zoom}z">Coordonnées : ${latitude}, ${longitude}</a></br>${adresse}`)
-
-         
-        
-        </script>
+        <script src="js/script.js"></script>
         
    
     </body>
