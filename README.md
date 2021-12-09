@@ -1,10 +1,11 @@
 # Fire-SimulateurView
 
-HTML CSS JS PHP
+HTML CSS JS PHP  
 
-Utilisation de la librairie JS leafletjs.com
+Utilisation de la librairie JS leafletjs.com  
 # Fire-SimulateurView
-![image](https://user-images.githubusercontent.com/66943979/145240893-39ad7bf6-957f-4b23-92cf-647a56bde27f.png)
+![image](https://user-images.githubusercontent.com/66943979/145435658-a8f1f09b-c233-487f-a3b5-6abed953581e.png)
+
 
 # Base de donnée
 Pour le moment pas de connexion.
