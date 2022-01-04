@@ -11,9 +11,9 @@ Utilisation de la librairie JS leafletjs.com
 Pour le moment pas de connexion.
 
 # TODO 
-- [ ] Attendre la création BDD
-- [ ] Ajout Automatiquement des markers
-- [ ] Ajout Automatiquement des entrés dans la \<table>
+- [x] Attendre la création BDD
+- [x] Ajout Automatiquement des markers
+- [x] Ajout Automatiquement des entrés dans la \<table>
 - [ ] Création de 5 flammes différentes avec différents niveau de gris.
 - [ ] Voir pour griser la map en dehors de Lyon et Villeurbanne.
 - [ ] Fichier htaccess réécriture d'URL
