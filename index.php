@@ -29,6 +29,11 @@
         <div id="main">
             <div id="tableau-arrive">
                 <div class="titre"><h1>Liste des Evenements</h1></div>
+                <div></br>
+                    🟢 = Traité</br>
+                    🟡 = Pris en charge</br>
+                    🔴 = Non traité</br></br>
+                </div>
                 <div id ="tableau" >
                     <table>
                         <thead>

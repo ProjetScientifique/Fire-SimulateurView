@@ -25,7 +25,7 @@ class API {
         return $response;
     
     }
-    
+    //🏢
     function getCasernes(string $TOKEN){
         curl_setopt_array($curl, array(
             CURLOPT_URL => $this->_BASE_URL_API.'/casernes?token_api='.$TOKEN.'&skip='.strval($skip).'&limit='.strval($limit),
@@ -45,7 +45,7 @@ class API {
 
     }
 
-
+    //👨‍🚒 
     //A VERIFIER CELLE LA ... 
     function getPompiersOfCaserne(string $TOKEN, int $id_caserne){
         curl_setopt_array($curl, array(
@@ -65,7 +65,7 @@ class API {
         return $response;
 
     }
-
+    //🚒
     //A VERIFIER CELLE LA ... 
     function getVehiculesOfCaserne(string $TOKEN, int $id_caserne){
         curl_setopt_array($curl, array(
