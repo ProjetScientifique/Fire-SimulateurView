@@ -10,7 +10,7 @@ Utilisation de la librairie JS leafletjs.com
 # Base de donnée
 Fait par le liens de l'api
 ### API url a modifié !!
-/API.php ligne 5.
+./API.php ligne 5.
 
 # TODO 
 - [x] Attendre la création BDD
