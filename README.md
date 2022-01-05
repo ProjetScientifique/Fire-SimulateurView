@@ -8,13 +8,15 @@ Utilisation de la librairie JS leafletjs.com
 
 
 # Base de donnée
-Pour le moment pas de connexion.
+Fait par le liens de l'api
+### API url a modifié !!
+/API.php ligne 5.
 
 # TODO 
 - [x] Attendre la création BDD
 - [x] Ajout Automatiquement des markers
 - [x] Ajout Automatiquement des entrés dans la \<table>
-- [ ] Création de 5 flammes différentes avec différents niveau de gris.
-- [ ] Voir pour griser la map en dehors de Lyon et Villeurbanne.
-- [ ] Fichier htaccess réécriture d'URL
-- [ ] table Liste Event scrollable.
+- [x] Création de ~~5~~ 3 images (flammes) avec différents niveau de gris. 
+- [ ] ~~Voir pour griser la map en dehors de Lyon et Villeurbanne.~~ Abandons  impossible ?
+- [ ] Fichier htaccess réécriture d'URL TODO
+- [ ] table Liste Event scrollable. VERIFIER
