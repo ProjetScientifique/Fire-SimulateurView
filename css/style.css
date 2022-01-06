@@ -60,6 +60,28 @@ tbody>tr{
 }
 
 
-#disponnibilite_vehicule{
+.disponnibilite_vehicule{
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
+
+.disponnibilite_pompier{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.center_dispo{
+    text-align: center;
+}
+/*
+.dispo{
+    background-color: green;
+}
+.temp_non_dispo{
+    background-color: orange;
+}
+
+.non_dispo{
+    background-color: red;
+}
+*/
