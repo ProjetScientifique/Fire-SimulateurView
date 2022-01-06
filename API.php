@@ -53,7 +53,7 @@ class API {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->_BASE_URL_API.'/pompiers/caserne/'.$id_caserne.'?token_api='.$TOKEN.'&skip='.strval($skip).'&limit='.strval($limit),
+            CURLOPT_URL => $this->_BASE_URL_API.'/pompiers/'.$id_caserne.'?token_api='.$TOKEN.'&skip='.strval($skip).'&limit='.strval($limit),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -70,33 +70,11 @@ class API {
 
     }
     //🚒
-    //A VERIFIER CELLE LA ... 
     function getVehiculesOfCaserne(string $TOKEN, int $id_caserne, int $skip=0, int $limit=1000){
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->_BASE_URL_API.'/vehicules/caserne/'.$id_caserne.'?token_api='.$TOKEN.'&skip='.strval($skip).'&limit='.strval($limit),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-        ));
-    
-        $response = curl_exec($curl);
-    
-        curl_close($curl);
-        return $response;
-
-    }
-
-    function getVehicules(string $TOKEN, int $id_caserne, int $skip=0, int $limit=1000){
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->_BASE_URL_API.'/vehicules?token_api='.$TOKEN.'&skip='.strval($skip).'&limit='.strval($limit),
+            CURLOPT_URL => $this->_BASE_URL_API.'/vehicules/'.strval($id_caserne).'?token_api='.$TOKEN.'&skip='.strval($skip).'&limit='.strval($limit),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
