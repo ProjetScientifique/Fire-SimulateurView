@@ -5,7 +5,8 @@ Utilisation de la librairie JS leafletjs.com
 
 # Fire-EmergencyView
 
-# TODO - METTRE A JOUR L'IMAGE.
+![image](https://user-images.githubusercontent.com/66943979/148413370-0de8589c-6c32-443f-82f9-70b2b26f0c65.png)
+
 
 # TODO - Docker à faire.
 
