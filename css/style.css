@@ -58,3 +58,8 @@ tbody>tr{
 .intensité{
     text-align: center;
 }
+
+
+#disponnibilite_vehicule{
+    display: grid;
+}

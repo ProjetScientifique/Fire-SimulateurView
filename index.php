@@ -1,16 +1,17 @@
 <?php 
     require_once('API.php');
     
-    $TOKEN = '449928d774153132c2c3509647e3d23f8e168fb50660fa27dd33c8342735b166';
-    $skip = 0;
-    $limit = 100;
+    $TOKEN = 'CB814D37E278A63D3666B1A1604AD0F5C5FD7E177267F62B8D719F49182F410A';
     /**
      * RECUPERATION DES EVENEMENTS
      * API-doc :
-     *      html://127.0.0.1/docs 
+     *      html://127.0.0.1:8000/docs 
      */
-    $incidents = (new API())->getIncident($TOKEN,$skip,$limit);
+    $incidents = (new API())->getIncident($TOKEN);
     $json_incidents=json_decode($incidents,TRUE);
+    $casernes = (new API())->getCasernes($TOKEN);
+    $json_casernes=json_decode($casernes,TRUE);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,7 +46,6 @@
                         <tbody>
                             
                             <?php 
-
                                 foreach ($json_incidents as $incident) {
                                     echo("<tr><td>".$incident['latitude_incident']." - ".$incident['longitude_incident']."</td><td class='intensite'>".$incident['intensite_incident']."</td></tr>\n");
                                 }
@@ -93,15 +93,15 @@
             //camion de pompier, sera utilisé dans la partie réel. 
             var iconCamionPompier = L.icon({
                 iconUrl: 'img/camion.png',
-                iconSize:     [50,50],//[35, 60], // size of the icon
+                iconSize:     [35,35],//[35, 60], // size of the icon
                 iconAnchor:   [22, 49], // point of the icon which will correspond to marker's location
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
 
             //point d'eau (peu être utile plus tard.)
-            var iconPointEau = L.icon({
-                iconUrl: 'img/eau.png',
-                iconSize:     [30,30],//[35, 60], // size of the icon
+            var iconCaserne = L.icon({
+                iconUrl: 'img/caserne.png',
+                iconSize:     [50,50],//[35, 60], // size of the icon
                 iconAnchor:   [22, 29], // point of the icon which will correspond to marker's location
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
@@ -189,7 +189,7 @@
             <?php 
                 foreach ($json_casernes as $caserne) {
                     echo("latitude_caserne_array.push('".$caserne['latitude_caserne']."');\n");
-                    echo("longitude_caserne_array.push('".$caserne['longitude_casernes']."');\n");
+                    echo("longitude_caserne_array.push('".$caserne['longitude_caserne']."');\n");
                     echo("nom_caserne_array.push('".$caserne['nom_caserne']."');\n");
                 }
             ?>
@@ -199,10 +199,43 @@
                 var nom = nom_caserne_array[index]
                 var adresse = "A TROUVER AVEC UNE API."
                 var zoom = 15
+                var nombreVehiculeDisponible= 10
+                var nombreVehiculeNonDisponible = 3
+                var nombrePompierDisponible = 21
+                var nombrePompierEnInterventionDisponible = 10
+                var nombrePompierNonDisponible = 5
+                
                 //modifier ca ...........;
-                var marker = L.marker([latitude, longitude],{icon:iconNiveau(type_incident,intensite_1_a_3)}).addTo(map);
-                marker.bindPopup(`${type_incident} de Niveau ${intensite} </br><a href="https://www.google.fr/maps/@${latitude},${longitude},${zoom}z">Coordonnées : ${latitude}, ${longitude}</a></br>${adresse}</br>${date_incident}`)
+                var marker = L.marker([latitude, longitude],{icon:iconCaserne}).addTo(map);
+                marker.bindPopup(`
+                <h1 class="title">Caserne de Pompier</h1>
+                <h2 class="NomCaserne">${nom}</h2></br>
+                <a href="https://www.google.fr/maps/@${latitude},${longitude},${zoom}z">
+                    <h4 class="adresse">ADRESSE RETURN BY API</h4>
+                </a>
+                Coordonnées : ${latitude}, ${longitude}</br>
+                <h4 class="vehicule disponnible">🚒 Véhicules:</h4></br>
+                <div class="disponnibilite_vehicule">
+                <div class="dispo_vehicule"><abbr title="Disponible">🟢</abbr> ${nombreVehiculeDisponible}</div>
+                <div class="nondispo_vehicule"><abbr title="En Intervention">🔴</abbr> ${nombreVehiculeNonDisponible}</div>
+                </div>
+                
+                <h4 class="pompier disponnible">👩‍🚒 Pompiers:</h4>
+                <abbr title="Disponible">🟢</abbr> ${nombrePompierDisponible}</br>
+                <abbr title="En Intervention">🟡</abbr> ${nombrePompierEnInterventionDisponible}</br>
+                <abbr title="Non Disponnible pour le moment">🔴</abbr> ${nombrePompierNonDisponible}
+                `)
+                //JE METTRAIS BIEN SOUS CETTE FORME :
+                /*
+                        Véhicules:
+                      🟢 10    🔴 5
+                        Pompiers:
+                    🟢 23  🟡 5   🔴 2
+
+                */
+
             }
+            
             
 
 
