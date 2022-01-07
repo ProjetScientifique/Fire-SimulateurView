@@ -2,7 +2,7 @@
 
 class API {
     function __construct(){
-        $this->_BASE_URL_API = 'http://192.168.5.183:8001';
+        $this->_BASE_URL_API = 'http://localhost:8000';
     }
 
     function getIncident(string $TOKEN, int $skip=0, int $limit=1000){
@@ -25,6 +25,31 @@ class API {
         return $response;
     
     }
+
+    // 
+    function getDetecteur(string $TOKEN, int $skip=0, int $limit=1000){
+        $curl = curl_init();
+    
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->_BASE_URL_API.'/detecteurs/?token_api='.$TOKEN.'&skip='.strval($skip).'&limit='.strval($limit),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+    
+        $response = curl_exec($curl);
+    
+        curl_close($curl);
+        return $response;
+    
+    }
+
+
+
     //🏢
     function getCasernes(string $TOKEN, int $skip=0, int $limit=1000){
         $curl = curl_init();
@@ -93,7 +118,7 @@ class API {
 
     function getAddressFromCoords($latitude,$longitude){
         $url = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=".strval($latitude)."&lon=".strval($longitude);
-        $curl = curl_init();
+        /*$curl = curl_init();
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
@@ -112,6 +137,8 @@ class API {
         $response = curl_exec($curl);
     
         curl_close($curl);
+        */
+        $response = "Lyon - LONG A CHARGER, très long";
         return $response;
     }
 }
