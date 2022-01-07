@@ -256,7 +256,7 @@
                         $AffichageRue = strval($caserne['latitude_caserne'])+" "+strval($caserne['longitude_caserne']);
                     }
                     
-                    //
+                    // TODO
                     $id_caserne = $caserne['id_caserne'];
                     $pompierCaserne = $API->getPompiersOfCaserne($TOKEN);
                     $pompiers = json_decode($pompierCaserne,TRUE);
