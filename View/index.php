@@ -10,10 +10,11 @@
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
         <link rel="stylesheet" href="css/style.css"/>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
         <script src="js/script.js"></script>
     </head>
     <body>
+        
         <div id="main">
             <div id="tableau-arrive">
                 <div class="titre"><h1>Liste des Evenements</h1></div>
@@ -35,10 +36,32 @@
                 <div class="titre"><h1>Carte des incidents</h1></div>
                 <div id="mapbox"></div>
             </div>
+            <script>
+            /**Appel API */
+            incidents = getIncidents()
+            detecteurs = getDetecteurs()
+            console.log(incidents)
+            /**Parse tableau */
+            tbody = document.getElementsByTagName("tbody")[0]
+
+            incidents.forEach(incident => {
+                className = incident['type_status_incident']['nom_type_status_incident'].replace(" ";"_")
+                nomRue = incident['type_incident']['nom_type_incident']
+                latitude = incident['latitude_incident']
+                longitude = incident['longitude_incident']
+                intensite = incident['intensite_incident']
+                ligne = `
+                <tr class='${className}'>
+                    <td>${nomRue}</td>
+                    <td>${latitude}, ${longitude}</td>
+                    <td class='intensite'>${intensite}</td>
+                </tr>
+                `
+                tbody.innerHTML = tbody.innerHTML + ligne
+            });
+            </script>
         </div>
-        <script>
-            getIncident()
-        </script>
+        
     </body>
     <footer>
 
