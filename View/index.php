@@ -1,0 +1,181 @@
+<?php 
+    require_once('API.php');
+    
+    $TOKEN = '449928d774153132c2c3509647e3d23f8e168fb50660fa27dd33c8342735b166';
+    $skip = 0;
+    $limit = 100;
+    /**
+     * RECUPERATION DES EVENEMENTS
+     * API-doc :
+     *      html://127.0.0.1/docs 
+     */
+    /*–––––––––––– Récupere la totalité des incidents –––––––––––– */
+    $API = (new API());
+    
+    
+    $incidents = $API->getIncident($TOKEN,$skip,$limit);
+    $json_incidents=json_decode($incidents,TRUE);
+    /*–––––––––––– Récupere la totalité des Capteurs(détécteurs) –––––––––––– */
+    $detecteurs = $API->getDetecteur($TOKEN);
+    $json_detecteurs=json_decode($detecteurs,TRUE);
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Service d'Urgence 🚒</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <link rel="stylesheet" href="css/style.css"/>
+    </head>
+    <body>
+        <div id="main">
+            <div id="tableau-arrive">
+                <div class="titre"><h1>Liste des Evenements</h1></div>
+                <div id ="tableau" >
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rue</th>
+                                <th>Intensité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <?php 
+
+                                foreach ($json_incidents as $incident) {
+                                    echo("<tr><td>".$incident['latitude_incident']." - ".$incident['longitude_incident']."</td><td class='intensite'>".$incident['intensite_incident']."</td></tr>\n");
+                                }
+                            ?>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="map">
+                <div class="titre"><h1>Carte des incidents</h1></div>
+                <div id="mapbox"></div>
+            </div>
+            
+        </div>
+        <script type="text/javascript">
+            /*A METTRE DANs UN FICHIER*/
+            //45.754154744767455, 4.864503340336376
+            const mapbox_token = "pk.eyJ1IjoidGVsbGVibWEiLCJhIjoiY2tuaXdleTY3MHM2dzJucGdpbGxsOXA3aCJ9.Lv06-rCdI3y9m0nC_0bWsg";
+            var map = L.map('mapbox').setView([45.75415, 4.8645033], 12.5);
+
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: '',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: mapbox_token
+            }).addTo(map);
+
+            //Si possible voir pour mettre en gris les villes non prise en charge
+            //https://github.com/mmaciejkowalski/L.Highlight
+
+            //Containeurs avec tous les markeurs:
+            var markers_incident = [] // 0 
+            var markers_detecteur = [] // 1
+            var markers_caserne = [] // 2 
+            var markers_vehicule = [] // 3
+            var markers_all = [markers_incident,markers_detecteur,markers_caserne,markers_vehicule]
+            
+            /* ––––––––––––DEFINE IMAGES––––––––––––*/
+            function iconNiveau(type,niveau) {
+                return L.icon({
+                    iconUrl: `img/${type}-${niveau}.png`,   
+                    iconSize:     [35,60],//[35, 60], // size of the icon
+                    iconAnchor:   [22, 59], // point of the icon which will correspond to marker's location
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                });
+            }
+
+            //Detecteur
+            var iconDetecteur = L.icon({
+                iconUrl: 'img/detecteur.png',
+                iconSize:     [25,25],//[35, 60], // size of the icon
+                iconAnchor:   [22, 29], // point of the icon which will correspond to marker's location
+                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
+            /*GET MARKER AUTOMATICLY IN JS BY API AT WEB SERVICE.  */
+
+            /* –––––––––––– ADD MARKERS –––––––––––– */
+            //AUTOMATICLY GENERATED BY PHP
+            <?php 
+                foreach ($json_detecteurs as $detecteur) {
+                    ?> 
+                        var latitude =  <?php echo($detecteur['latitude_detecteur']); ?> //coord lat
+                        var longitude = <?php echo($detecteur['longitude_detecteur']); ?> //coord long
+                        
+                        //Ajout du marker: avec une image (type_incident, et une intensité de 1 à 3.
+                        var marker = L.marker([latitude, longitude],{icon:iconDetecteur}).addTo(map);
+                        markers_detecteur.push(marker)//ajout du marker dans un tableau (utilisé pour cacher les markeurs de type :)
+                    <?php
+                }
+            ?>
+            
+            //AUTOMATICLY GENERATED BY PHP
+            <?php 
+                foreach ($json_incidents as $incident) {
+                    /*try {
+                        $address = $API->getAddressFromCoords($incident['latitude_incident'],$incident['longitude_incident']);
+                        $addressJson=json_decode($address,TRUE);
+                        $address = $addressJson['address'];
+                        // sous la forme de : Lyon - Rue Garibaldi, Part-Dieu
+                        $AffichageRue = $address["city"].' - '.$address["road"].', '.$address["suburb"];
+                        if ($AffichageRue == " - , "){
+                            $AffichageRue = strval($incident['latitude_incident'])." ".strval($incident['longitude_incident']);
+                        }
+
+                    } catch (Exception $e) {
+                        print_r($e);//cas erreur (afficher = DEBUG)
+                        $AffichageRue = strval($incident['latitude_incident'])." ".strval($incident['longitude_incident']);
+                    }*/
+                    $AffichageRue = strval($incident['latitude_incident']).", ".strval($incident['longitude_incident']);
+                    ?> 
+                        var latitude =  <?php echo($incident['latitude_incident']); ?> //coord lat
+                        var longitude = <?php echo($incident['longitude_incident']); ?> //coord long
+                        var adresse = '<?php echo($AffichageRue); ?>' //adresse postal calculer par l'API. (pr faire jolie...)
+                        var date_incident = Date('<?php echo($incident['date_incident']); ?>') //date apparition
+                        var intensite = <?php echo($incident['intensite_incident']); ?> //1 à 100
+                        var type_incident = '<?php echo($incident['type_incident']['nom_type_incident']); ?>' // prit en charge (incendie)
+                        var status = '<?php echo($incident['type_status_incident']['nom_type_status_incident']); ?>'
+                        var intensite_1_a_3 = Math.round(parseInt(intensite)/10*2)+1
+                        
+                        //Ajout du marker: avec une image (type_incident, et une intensité de 1 à 3.
+                        var marker = L.marker([latitude, longitude],{icon:iconNiveau(type_incident,intensite_1_a_3)}).addTo(map);
+                        marker.bindPopup(`
+                        <h1 class="title">${type_incident} de Niveau ${intensite}</h1>
+                        <h2 class="date_incident">${date_incident.toLocaleString('fr-FR', { timeZone: 'UTC' })}</h2>
+                        <a href="https://www.google.fr/maps/@${latitude},${longitude},15z">
+                        <h4 class="adresse">${adresse}</h4>
+                        </a></br>
+                        <b>Coordonnées</b> : ${latitude}, ${longitude}</br></br>
+                        <h4 class="status incident">
+                            Incident ${status}
+                        </h4>`)
+                        markers_incident.push(marker)//ajout du marker dans un tableau (utilisé pour cacher les markeurs de type :)
+
+                    <?php
+                }
+            ?>
+            
+
+
+        </script>
+        
+   
+    </body>
+    <footer>
+
+    </footer>
+</html>

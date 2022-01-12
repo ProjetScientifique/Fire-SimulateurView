@@ -8,4 +8,4 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./Fire-SimulateurView:/var/www/html/
+      - ./View:/var/www/html/
