@@ -1,30 +1,19 @@
-# Fire-EmergencyView
-HTML CSS JS PHP  
+# Fire-SimulateurView
 
-Utilisation de la librairie JS leafletjs.com  
+HTML CSS JS PHP
 
-# Fire-EmergencyView
+Utilisation de la librairie JS leafletjs.com
+# Fire-SimulateurView
+![image](https://user-images.githubusercontent.com/66943979/145240893-39ad7bf6-957f-4b23-92cf-647a56bde27f.png)
 
-![image](https://user-images.githubusercontent.com/66943979/148413370-0de8589c-6c32-443f-82f9-70b2b26f0c65.png)
-
-
-# TODO - Docker à faire.
+# Base de donnée
+Pour le moment pas de connexion.
 
 # TODO 
-- [x] Reprendre le code du Web Simulateur.
-- [ ] Mettre en place les incidents et les Casernes sur la carte.
-- [ ] Fonctionnalité: afficher les camions (et leurs trajectoires)
-- [ ] Fonctionnalité: Cliquer sur une caserne surligne, les camions de la caserne et affiche une popup le nombre de pompier total, en intervention, liste des véhicules (en intervention et libre).
-
-- [ ] Fichier htaccess réécriture d'URL
-
-## liste a gauche:
-- [ ] table Liste Event scrollable.
-- [ ] liste des incidents, changer les couleurs lorsque pris en charge, et terminé
-- [ ] différentes pages (carrousel) :
-  - - [ ] Selections des Casernes
-  - - [ ] Selection des Camions
-  - - [ ] Recherche de: Véhicule ? (pk pas ?)
-  - - [ ] Recherche de: Pompier ? (pk pas ? cela afficherais : Caserne de rattachement, véhicule en cours et incident si sur intervention.)
-
-
+- [x] Attendre la création BDD
+- [x] Ajout Automatiquement des markers
+- [x] Ajout Automatiquement des entrés dans la \<table>
+- [x] Création de --5-- 3 flammes différentes avec différents niveau de gris.
+- [ ]  --Voir pour griser la map en dehors de Lyon et Villeurbanne.--
+- [x] Fichier htaccess réécriture d'URL (seulement index.php donc osef.)
+- [ ] table Liste Event scrollable. RELOU.

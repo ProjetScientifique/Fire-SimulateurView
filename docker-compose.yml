@@ -3,9 +3,9 @@ version: '3.8'
 services:
   php:
     image: php:7.4-apache
-    container_name: apache
+    container_name: apache_simulation_view
     restart: always
     ports:
       - 80:80
     volumes:
-      - ./Fire-EmergencyView:/var/www/html/
+      - ./Fire-SimulateurView:/var/www/html/
