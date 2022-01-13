@@ -94,12 +94,10 @@
                 iconAnchor:   [22, 29], // point of the icon which will correspond to marker's location
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
-            
-            updateall(map)
-            setTimeout(function(){
-            updateall(map)
 
-            }, 5000);
+            updateall(map)
+            setInterval(updateall,10000,map)
+
         </script>
         </div>
         

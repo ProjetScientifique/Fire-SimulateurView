@@ -1,5 +1,5 @@
 
-var URL = 'http://localhost:8000'
+var URL = 'http://192.168.5.136:8000'
 var TOKEN = '449928d774153132c2c3509647e3d23f8e168fb50660fa27dd33c8342735b166'
 skip = 0
 limit = 1000
