@@ -6,6 +6,6 @@ services:
     container_name: apache_simulation_view
     restart: always
     ports:
-      - 8081:80
+      - 80:80
     volumes:
       - ./View:/var/www/html/
