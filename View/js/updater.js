@@ -1,4 +1,23 @@
+function init(map){
+    //ajout des capteurs
+    map.eachLayer(function (layer) { 
+        if (layer.options.name === 'detecteur') {
+            map.removeLayer(layer) 
+        }
+    });
 
+    /* –––––––––––– ADD MARKERS –––––––––––– */
+    detecteurs = getDetecteurs()
+    detecteurs.forEach(detecteur => {
+        id = detecteur['id_detecteur']
+        latitude = detecteur['latitude_detecteur']
+        longitude = detecteur['longitude_detecteur']
+        //Ajout du marker: avec une image (type_incident, et une intensité de 1 à 3.
+        var marker = L.marker([latitude, longitude],{icon:iconDetecteur}).addTo(map);
+        marker.options.name = "detecteur"
+        markers_detecteur[id] = marker
+    });
+}
 
 
 function updateall(map){

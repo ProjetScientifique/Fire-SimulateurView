@@ -70,23 +70,6 @@
                 });
             }
 
-            //todo mettre sous forme de fonction comme iconNiveau??
-            //camion de pompier, sera utilisé dans la partie réel. 
-            var iconCamionPompier = L.icon({
-                iconUrl: 'img/camion.png',
-                iconSize:     [35,35],//[35, 60], // size of the icon
-                iconAnchor:   [22, 49], // point of the icon which will correspond to marker's location
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-
-            //Caserne
-            var iconCaserne = L.icon({
-                iconUrl: 'img/caserne.png',
-                iconSize:     [50,50],//[35, 60], // size of the icon
-                iconAnchor:   [22, 29], // point of the icon which will correspond to marker's location
-                popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-            });
-
             //Detecteur
             var iconDetecteur = L.icon({
                 iconUrl: 'img/detecteur.png',
@@ -94,8 +77,9 @@
                 iconAnchor:   [22, 29], // point of the icon which will correspond to marker's location
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
-
+            init(map)
             updateall(map)
+            //update toutes les 10 secondes inutile de faire moins.
             setInterval(updateall,10000,map)
 
         </script>
